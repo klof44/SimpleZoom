@@ -76,6 +76,11 @@ namespace DuckGame.SimpleZoom
             {
                 duck--;
             }
+            
+            if (rock && !(Level.current is RockIntro))
+            {
+                rock = false;
+            }
         }
         public void OnDrawLayer(Layer l)
         {
