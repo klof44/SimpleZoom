@@ -16,11 +16,7 @@ namespace DuckGame.SimpleZoom
         {
             internal static void Prefix()
             {
-                while (Level.current is RockIntro)
-                {
                     SimpleUpdate.rock = true;
-                }
-                SimpleUpdate.rock = false;
             }
         }
     }
