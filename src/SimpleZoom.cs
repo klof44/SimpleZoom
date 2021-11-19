@@ -4,7 +4,7 @@ using DuckGame;
 
 [assembly: AssemblyTitle("Simple Zoom")]
 [assembly: AssemblyCompany("|GREEN|klof44")]
-[assembly: AssemblyDescription("Why do you even have this installed?")]
+[assembly: AssemblyDescription("Allows you to control zoom")]
 [assembly: AssemblyVersion("0.1.0.0")]
 
 namespace DuckGame.SimpleZoom

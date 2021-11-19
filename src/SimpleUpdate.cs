@@ -14,66 +14,81 @@ namespace DuckGame.SimpleZoom
             if (Keyboard.Pressed(Keys.F10))
             {
                 zoom = !zoom;
-                DevConsole.Log("SimpleZoom Enabled: " + zoom.ToString());
             }
-            if (Keyboard.Down(Keys.OemOpenBrackets) && flote > 1 && !DuckNetwork.core.enteringText && !DevConsole.core.open)
+            if (Keyboard.Down(Keys.OemOpenBrackets) && zoomNum > 1 && !DuckNetwork.core.enteringText && !DevConsole.core.open)
             {
-                flote--;
+                zoomNum--;
             }
             if (Keyboard.Down(Keys.OemCloseBrackets) && !DuckNetwork.core.enteringText && !DevConsole.core.open)
             {
-                flote++;
+                zoomNum++;
             }
         }
         public void Update()
         {
             if (Keyboard.Pressed(Keys.OemQuotes) && !DuckNetwork.core.enteringText && !DevConsole.core.open)
             {
-                eent++;
+                duck++;
+                right = true;
             }
             if (Keyboard.Pressed(Keys.OemSemicolon) && !DuckNetwork.core.enteringText && !DevConsole.core.open)
             {
-                eent--;
+                duck--;
+                right = false;
+            }
+
+            if (duck < 0)
+            {
+                duck = 7;
+            }
+            if (duck > 7)
+            {
+                duck = 0;
             }
         }
         public void PostUpdate()
         {
-            Duck d = Duck.Get(eent);
+            Duck d = Duck.Get(duck);
             if (zoom && d != null && !(Level.current is RockIntro) && !(Level.current is RockScoreboard) && !rock)
             {
-                float six = flote * 16f;
-                float nine = flote * 9f;
+                float six = zoomNum * 16f;
+                float nine = zoomNum * 9f;
                 Vec2 vec = new Vec2(six, nine);
                 if (zoom)
                 {
                     Layer.Foreground.camera.size = vec;
                     Layer.Foreground.camera.center = d.GetPos();
                 }
-                if (d.dead)
+                if (d.dead && right)
                 {
-                    eent++;
+                    duck++;
+                }
+                else if (d.dead && !right)
+                {
+                    duck--;
                 }
             }
-            if (d == null)
+            if (d == null && right)
             {
-                eent++;
+                duck++;
             }
-            if (eent > 7)
+            else if (d == null && !right)
             {
-                eent = 0;
+                duck--;
             }
         }
         public void OnDrawLayer(Layer l)
         {
             bool draw = l == Layer.Console;
-            if (draw && zoom)
+            if (draw && zoom && !rock)
             {
-                Graphics._biosFont.Draw("Zoom Enabled", 1, Layer.Console.camera.bottom - 8, Color.White);
+                Graphics._biosFont.Draw(duck.ToString(), 1, Layer.Console.camera.bottom - 8, Color.White);
             }
         }
         internal static bool zoom = false;
         internal static bool rock = false;
-        private float flote = 20;
-        private int eent = 0;
+        private float zoomNum = 20;
+        private int duck = 0;
+        private bool right = true;
     }
 }
