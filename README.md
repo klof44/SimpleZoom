@@ -1,5 +1,5 @@
 # SimpleZoom
-A simple Duck Game mod that lets you control the zoom
+A simple Duck Game mod that allows you to control camera zoom
 
 F10 to enable
 
